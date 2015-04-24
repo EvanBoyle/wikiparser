@@ -68,17 +68,17 @@ module.exports = function(title, cb) {
             var item_name    = temp[0].trim(),
                 item_content = temp[1].trim().split('\n')[0];
 
-            // Extract all simple texts inside '[[ ]]', 
+            // Extract all simple texts inside '[[ ]]',
             // such as [[France]], [[Language French|French]], etc.
             var find = item_content.match(/\[\[.*?\]\]/g);
             if (find) {
               find.forEach(function(substring) {
                 var arr = substring.split('|');
                 if (arr.length === 1) {
-                  item_content = item_content.replace(substring, 
+                  item_content = item_content.replace(substring,
                                                       substring.substr(2, substring.length-4));
                 } else if (arr.length === 2) {
-                  item_content = item_content.replace(substring, 
+                  item_content = item_content.replace(substring,
                                                       arr[1].substr(0, arr[1].length-2));
                 }
               });
@@ -103,7 +103,7 @@ module.exports = function(title, cb) {
                   item_content = item_content.replace(substring, arr[2]);
                 });
               }
-            }      
+            }
 
             // Remove list tag
             if (item_content.indexOf('{{unbulleted') !== -1) {
@@ -115,10 +115,10 @@ module.exports = function(title, cb) {
                   item_content = item_content.replace(substring, arr.join(',').replace('}}', ''));
                 });
               }
-            }      
+            }
 
             // Remove simple vertical list tag
-            if (item_content.indexOf('{{vunblist') !== -1 && 
+            if (item_content.indexOf('{{vunblist') !== -1 &&
                 item_content.split('{{').length < 3) {
               find = item_content.match(/\{\{vunblist[^\}\}]*?\}\}/g);
               if (find) {
@@ -156,7 +156,7 @@ module.exports = function(title, cb) {
             item_content = replaceAll('\n\}\}', '', item_content);
             result[item_name] = item_content;
           }
-          
+
         });
 
       }

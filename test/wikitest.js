@@ -40,7 +40,7 @@ describe('Wiki parser need to redirect.', function(done) {
 
   it('should return redirection', function(done) {
     parseWiki('nodejs', function(err, result) {
-      assert.equal(true, result.indexOf('REDIRECT') > -1);
+      assert.equal(true, result.indexOf('REDIRECT') === -1);
       done(err);
     });
   });
