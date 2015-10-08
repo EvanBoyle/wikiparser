@@ -1,4 +1,4 @@
-[Wikipedia Infobox](http://en.wikipedia.org/w/api.php) parser
+[Wikipedia Infobox](http://en.wikipedia.org/w/api.php) parser  [![build status](https://travis-ci.org/zp-j/wikiparser.svg?branch=master)](https://travis-ci.org/zp-j/wikiparser)
 ======
 
 A simple parser in node.js for wikipedia markdown text. Particularly, this parser only works for Infobox.
