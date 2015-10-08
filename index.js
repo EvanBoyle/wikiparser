@@ -20,7 +20,15 @@ module.exports = function(title, cb) {
   });
 
   function handleContent(content) {
-    content = JSON.parse(content);
+    
+    // need try catch here in case parse throws an exception
+    try {
+      content = JSON.parse(content);
+    }
+    catch(ex) {
+      return;
+    }
+    
 
     if (!content.query) {
       cb(null, 'Query Not Found');
