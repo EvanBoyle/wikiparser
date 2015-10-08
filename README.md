@@ -3,7 +3,7 @@
 
 A simple parser in node.js for wikipedia markdown text. Particularly, this parser only works for Infobox.
 
-[More examples can be found here.](http://jesusjzp.github.io/blog/2014/08/01/wikipedia-infobox-parser/)
+[More examples can be found here.](http://zp-j.github.io/blog/2014/08/01/wikipedia-infobox-parser/)
 
 
 ## Install
