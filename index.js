@@ -1,8 +1,13 @@
 var request    = require('request');
 
-module.exports = function(title, cb) {
+module.exports = function(title, callback) {
 
-  var url = ['http://en.wikipedia.org/w/api.php?',
+  // In case a uncommon hyphen is entered
+  // TODO: more exceptions can be added here
+  title = replaceAll('–', '-', title);
+
+  // Construct url path
+  var url = ['https://en.wikipedia.org/w/api.php?',
                 'action=query&',
                 'prop=revisions&',
                 'rvprop=content&',
@@ -13,25 +18,25 @@ module.exports = function(title, cb) {
 
   request(url, function(error, response, content) {
     if (error) {
-      cb(error);
+      callback(error);
+    } else if (response.statusCode !== 200) {
+      callback(new Error(response.statusMessage));
     } else {
       handleContent(content);
     }
   });
 
   function handleContent(content) {
-    
-    // need try catch here in case parse throws an exception
+
+    // Need try catch here in case parse throws an exception
     try {
       content = JSON.parse(content);
-    }
-    catch(ex) {
+    } catch(e) {
       return;
     }
-    
 
     if (!content.query) {
-      cb(null, 'Query Not Found');
+      callback(null, 'Query Not Found');
       return;
     }
 
@@ -39,10 +44,10 @@ module.exports = function(title, cb) {
     var key  = Object.keys(json);
 
     if (key.indexOf('-1') === 0) {
-      cb(null, 'Page Index Not Found');
+      callback(null, 'Page Index Not Found');
       return;
     } else if (json[key].revisions[0]['*'].indexOf('REDIRECT') > -1) {
-      cb(null, json[key].revisions[0]['*']);
+      callback(null, json[key].revisions[0]['*']);
       return;
     }
 
@@ -52,7 +57,7 @@ module.exports = function(title, cb) {
     var text   = reg.exec(json[key].revisions[0]['*']);
 
     if (!text) {
-      cb(null, 'Infobox Not Found');
+      callback(null, 'Infobox Not Found');
       return;
     } else {
       text = text[0];
@@ -164,12 +169,10 @@ module.exports = function(title, cb) {
             item_content = replaceAll('\n\}\}', '', item_content);
             result[item_name] = item_content;
           }
-
         });
-
       }
 
-      cb(null, JSON.stringify(result));
+      callback(null, JSON.stringify(result));
       return;
     }
   }
@@ -178,10 +181,8 @@ module.exports = function(title, cb) {
   function replaceAll(find, replace, str) {
     if(str) {
       return str.replace(new RegExp(find, 'gm'), replace).trim();
-    }
-    else {
+    } else {
       return null;
     }
   }
-
 };

@@ -6,7 +6,7 @@ function checkJson(text) {
       replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
       replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
     return true;
-  }else{
+  } else {
     return false;
   }
 }
@@ -29,6 +29,13 @@ describe('Wiki parser successfully.', function(done) {
 
   it('should return json data', function(done) {
     parseWiki('Stoic_(film)', function(err, result) {
+      assert.equal(true, checkJson(result));
+      done(err);
+    });
+  });
+
+  it('should handle unexpected characters', function(done) {
+    parseWiki('Lewis–Clark_State_College', function(err, result) {
       assert.equal(true, checkJson(result));
       done(err);
     });
