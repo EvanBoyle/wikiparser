@@ -51,6 +51,12 @@ parseWiki('france', function(err, result) {
 - Multiple opetions redirection
 - Multiple languages support
 
+## Contributors
+
+- [Zhipeng Jiang](http://zp-j.github.io)
+- [Sagar Karira](https://github.com/sagarkarira)
+- [Evan Boyle](https://github.com/EvanBoyle)
+
 ## Reference
 
 - [Wikipedia API](http://en.wikipedia.org/w/api.php)
