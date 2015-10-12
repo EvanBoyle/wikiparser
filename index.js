@@ -32,6 +32,7 @@ module.exports = function(title, callback) {
     try {
       content = JSON.parse(content);
     } catch(e) {
+      cb(e);
       return;
     }
 
@@ -46,6 +47,9 @@ module.exports = function(title, callback) {
     if (key.indexOf('-1') === 0) {
       callback(null, 'Page Index Not Found');
       return;
+    } else if(!json[key]){
+    	cb("error: malformed response payload");
+    	return;
     } else if (json[key].revisions[0]['*'].indexOf('REDIRECT') > -1) {
       callback(null, json[key].revisions[0]['*']);
       return;
